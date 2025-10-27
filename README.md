@@ -63,11 +63,17 @@ The goal is to:
 ##  Features
 
 ✅ **Zero Downtime Failover:** If Blue fails, Nginx instantly switches to Green.
+
 ✅ **Automatic Health Checks:** Nginx monitors `/healthz` endpoints for availability.
+
 ✅ **Retry on Failure:** Nginx retries failed/timeout requests on the backup pool.
+
 ✅ **Manual Toggle:** Switch active environment using `ACTIVE_POOL` variable.
+
 ✅ **Header Preservation:** App headers `X-App-Pool` and `X-Release-Id` are preserved end-to-end.
+
 ✅ **Parameterization via `.env`:** Full configuration control for CI/CD.
+
 ✅ **Chaos Testing:** Built-in simulation of service failures.
 
 ---
@@ -107,9 +113,9 @@ The goal is to:
 
 The setup defines three services:
 
-1. **nginx** – Reverse proxy that routes traffic.
-2. **app_blue** – Primary application container.
-3. **app_green** – Secondary/backup application container.
+1. **nginx**: Reverse proxy that routes traffic.
+2. **app_blue**: Primary application container.
+3. **app_green**: Secondary/backup application container.
 
 All services run on a shared network (`app_net`).
 
@@ -155,7 +161,7 @@ networks:
 
 ---
 
-##  Nginx Configuration Logic
+##  Nginx configuration logic
 
 The **Nginx upstream configuration** is dynamically templated from the environment variable `ACTIVE_POOL`.
 During container startup, it uses `envsubst` to render `nginx.conf` based on which pool is active.
@@ -192,7 +198,7 @@ http {
     }
 }
 ```
-## 🧱 Prerequisites
+## Prerequisites
 
 Ensure the following are installed on your system:
 
@@ -203,9 +209,9 @@ Ensure the following are installed on your system:
 
 ---
 
-## ⚙️ Project Setup
+## Project setup
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/<your-username>/<your-repo>.git
@@ -299,7 +305,7 @@ This swaps the active pool without downtime.
 
 ---
 
-##  Chaos Testing (Simulate Failure)
+##  Chaos testing (Simulate Failure)
 
 Each service exposes endpoints to simulate errors and timeouts:
 
@@ -325,7 +331,7 @@ curl -X POST http://localhost:8081/chaos/stop
 
 ---
 
-##  Expected Behavior
+##  Expected behavior
 
 | Scenario                     | Expected Output                                 |
 | ---------------------------- | ----------------------------------------------- |
@@ -337,7 +343,7 @@ curl -X POST http://localhost:8081/chaos/stop
 
 ---
 
-##  Health Verification Commands
+##  Health verification commands
 
 ```bash
 # Check which pool is active
@@ -346,20 +352,6 @@ curl -I http://localhost:8080/version | grep X-App-Pool
 # Validate failover logic
 watch -n 1 "curl -s -I http://localhost:8080/version | grep X-App-Pool"
 ```
-
----
-
-##  CI/CD Integration (Conceptual)
-
-In a real-world CI pipeline:
-
-1. **Build phase** — CI sets environment variables (`BLUE_IMAGE`, `GREEN_IMAGE`, etc.).
-2. **Deploy phase** — Compose brings up new version (Green).
-3. **Verify phase** — Health checks validate the Green service.
-4. **Switch phase** — `ACTIVE_POOL` updates to Green via config templating.
-5. **Rollback** — On failure, revert `ACTIVE_POOL` to Blue.
-
-This mimics a **safe, zero-downtime deployment flow**.
 
 ---
 
@@ -480,7 +472,7 @@ docker inspect --format='{{.State.Health.Status}}' app_blue
 
 ---
 
-## 🧠 Architecture Decision Record (ADR)
+## Architecture Decision Record (ADR)
 
 **Why Blue/Green?**
 
@@ -499,18 +491,6 @@ docker inspect --format='{{.State.Health.Status}}' app_blue
 * Guarantees client transparency
 * Zero visible downtime
 * Complies with “no non-200 responses” rule
-
----
-
-## CI/CD and Verification Notes
-
-* The CI grader will set `.env` automatically
-* Verifies:
-
-  * Correct header forwarding
-  * Instant failover under `/chaos/start`
-  * No non-200s during failover window
-  * Proper recovery back to Blue after chaos ends
 
 ---
 
