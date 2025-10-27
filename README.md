@@ -62,19 +62,19 @@ The goal is to:
 
 ##  Features
 
-✅ **Zero Downtime Failover:** If Blue fails, Nginx instantly switches to Green.
+-  **Zero Downtime Failover:** If Blue fails, Nginx instantly switches to Green.
 
-✅ **Automatic Health Checks:** Nginx monitors `/healthz` endpoints for availability.
+-  **Automatic Health Checks:** Nginx monitors `/healthz` endpoints for availability.
 
-✅ **Retry on Failure:** Nginx retries failed/timeout requests on the backup pool.
+-  **Retry on Failure:** Nginx retries failed/timeout requests on the backup pool.
 
-✅ **Manual Toggle:** Switch active environment using `ACTIVE_POOL` variable.
+-  **Manual Toggle:** Switch active environment using `ACTIVE_POOL` variable.
 
-✅ **Header Preservation:** App headers `X-App-Pool` and `X-Release-Id` are preserved end-to-end.
+-  **Header Preservation:** App headers `X-App-Pool` and `X-Release-Id` are preserved end-to-end.
 
-✅ **Parameterization via `.env`:** Full configuration control for CI/CD.
+-  **Parameterization via `.env`:** Full configuration control for CI/CD.
 
-✅ **Chaos Testing:** Built-in simulation of service failures.
+-  **Chaos Testing:** Built-in simulation of service failures.
 
 ---
 
