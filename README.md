@@ -3,7 +3,9 @@
 ### Author: Kokoscripts
 
 **Project Type:** DevOps / Cloud Infrastructure
+
 **Tech Stack:** Docker, Docker Compose, Nginx, Node.js
+
 **Objective:** High-availability deployment with automatic failover and manual traffic switching between Blue and Green environments.
 
 ---
