@@ -513,6 +513,6 @@ This stops all containers and removes volumes.
 ---
 ## Conclusion
 
-This project models **production-grade deployment resilience**—balancing simplicity (Docker Compose) and reliability (Nginx failover). It ensures **high availability**, **fault tolerance**, and **manual control** through configuration-driven environments.
+This project models **production-grade deployment resilience**, balancing simplicity (Docker Compose) and reliability (Nginx failover). It ensures **high availability**, **fault tolerance**, and **manual control** through configuration-driven environments.
 
 *"If you can fail safely, you can scale confidently."*
