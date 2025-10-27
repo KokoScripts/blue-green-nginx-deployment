@@ -1,0 +1,35 @@
+# Environment files (grader will provide .env)
+.env
+.env.local
+.env.*.local
+
+# Docker Compose local state
+.docker/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Node modules (if needed)
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
